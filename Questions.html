@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="/Project/js/color-modes.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.118.2">
+    <title>Quiz Project</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
+
+    
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="/Project/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+
+      .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+      }
+  
+
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.profile{
+  margin:0 1200px;
+  position:relative;
+  top:-500px;
+  cursor:pointer;
+}
+
+    </style>
+<link href="/Project/css/questions.css" rel="stylesheet">
+    
+  </head>
+  <body>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+      <symbol id="check2" viewBox="0 0 16 16">
+        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+      </symbol>
+      <symbol id="circle-half" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+      </symbol>
+      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+      </symbol>
+      <symbol id="sun-fill" viewBox="0 0 16 16">
+        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+      </symbol>
+    </svg>
+
+   
+
+    
+<header data-bs-theme="dark">
+  <div class="collapse text-bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4>About</h4>
+          <p class="text-body-secondary">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4>Contact</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white">Follow on Twitter</a></li>
+            <li><a href="#" class="text-white">Like on Facebook</a></li>
+            <li><a href="#" class="text-white">Email me</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <strong>Quiz</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="back">
+<img src="data:image/jpeg;base64,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" width="1370px;" height="570px;">
+<div id="page-wrap">
+    <p id="demo"></p>
+		<h1>Php Quiz</h1>
+		
+		<form action="grade.php" method="post" id="quiz">
+		
+            <ol>
+            
+                <li>
+                
+                    <h3>CSS Stands for...</h3>
+                    
+                    <div>
+                        <input type="radio" name="question-1-answers" id="question-1-answers-A" value="A" />
+                        <label for="question-1-answers-A">A) Computer Styled Sections </label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-1-answers" id="question-1-answers-B" value="B" />
+                        <label for="question-1-answers-B">B) Cascading Style Sheets</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-1-answers" id="question-1-answers-C" value="C" />
+                        <label for="question-1-answers-C">C) Crazy Solid Shapes</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-1-answers" id="question-1-answers-D" value="D" />
+                        <label for="question-1-answers-D">D) None of the above</label>
+                    </div>
+                
+                </li>
+                
+                <li>
+                
+                    <h3>Internet Explorer 6 was released in...</h3>
+                    
+                    <div>
+                        <input type="radio" name="question-2-answers" id="question-2-answers-A" value="A" />
+                        <label for="question-2-answers-A">A) 2001</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-2-answers" id="question-2-answers-B" value="B" />
+                        <label for="question-2-answers-B">B) 1998</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-2-answers" id="question-2-answers-C" value="C" />
+                        <label for="question-2-answers-C">C) 2006</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-2-answers" id="question-2-answers-D" value="D" />
+                        <label for="question-2-answers-D">D) 2003</label>
+                    </div>
+                
+                </li>
+                
+                <li>
+                
+                    <h3>SEO Stand for...</h3>
+                    
+                    <div>
+                        <input type="radio" name="question-3-answers" id="question-3-answers-A" value="A" />
+                        <label for="question-3-answers-A">A) Secret Enterprise Organizations</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-3-answers" id="question-3-answers-B" value="B" />
+                        <label for="question-3-answers-B">B) Special Endowment Opportunity</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-3-answers" id="question-3-answers-C" value="C" />
+                        <label for="question-3-answers-C">C) Search Engine Optimization</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-3-answers" id="question-3-answers-D" value="D" />
+                        <label for="question-3-answers-D">D) Seals End Olives</label>
+                    </div>
+                
+                </li>
+                
+                <li>
+                
+                    <h3>A 404 Error...</h3>
+                    
+                    <div>
+                        <input type="radio" name="question-4-answers" id="question-4-answers-A" value="A" />
+                        <label for="question-4-answers-A">A) is an HTTP Status Code meaning Page Not Found</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-4-answers" id="question-4-answers-B" value="B" />
+                        <label for="question-4-answers-B">B) is a good excuse for a clever design</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-4-answers" id="question-4-answers-C" value="C" />
+                        <label for="question-4-answers-C">C) should be monitored for in web analytics</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-4-answers" id="question-4-answers-D" value="D" />
+                        <label for="question-4-answers-D">D) All of the above</label>
+                    </div>
+                
+                </li>
+                
+                <li>
+                
+                    <h3>Your favorite website is</h3>
+                    
+                    <div>
+                        <input type="radio" name="question-5-answers" id="question-5-answers-A" value="A" />
+                        <label for="question-5-answers-A">A) quizzer</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-5-answers" id="question-5-answers-B" value="B" />
+                        <label for="question-5-answers-B">B) quizzer</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-5-answers" id="question-5-answers-C" value="C" />
+                        <label for="question-5-answers-C">C) quizzer</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" name="question-5-answers" id="question-5-answers-D" value="D" />
+                        <label for="question-5-answers-D">D) quizzzer</label>
+                    </div>
+                
+                </li>
+            
+            </ol>
+            
+            <input type="submit" value="Submit Quiz" />
+		
+		</form>
+	
+	</div>
+	
+	
+    <script>
+    // Set the date we're counting down to
+    var countDownDate = (new Date().getTime() + (60 * 1000 * 4));
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+    
+    
+      // Get today's date and time
+      var now = new Date().getTime();
+        
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+        
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+      // Output the result in an element with id="demo"
+      document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+      + minutes + "m " + seconds + "s ";
+        
+      // If the count down is over, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+      }
+    }, 1000);
+    </script>
+<script src="/Project/js/bootstrap.bundle.min.js"></script></div>
+</div>
+    </body>
+</html>
