@@ -1,30 +1,27 @@
 <?php
-// Check if the form is submitted
+// Assuming you have a database connection established
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the email, ID, and password from the form
-    $email = isset($_POST["email-address"]) ? $_POST["email-address"] : "";
-    $password = isset($_POST["password"]) ? $_POST["password"] : "";
+    $adminemail = $_POST['email-address'];
+    $adminPassword = $_POST['password'];
 
-    // Replace the following with your actual database connection logic
-    // For simplicity, we are using hardcoded values for demonstration purposes
-    $validEmail = "user@example.com";
-    $validPassword = "password123";
+    // Check admin credentials in the admin_users table
+    /*$query = "SELECT * FROM admin_users WHERE username = '$adminUsername'";
+    $result = mysqli_query($conn, $query);
 
-    // Validate email, ID, and password
-    if (!empty($email) && !empty($password)) {
-        if ($email == $validEmail && $password == $validPassword) {
-            // Authentication successful
-            header("Location: /Project/topics.html");
-            // You can redirect the user to another page or perform additional actions here
+    if ($result) {
+        $adminData = mysqli_fetch_assoc($result);*/
+
+        if ($adminemail=="admin@gmail.com" && $adminPassword=="admin001") {
+            // Admin login successful, redirect to admin module
+            header("Location: /project/Admin/bootstrap-admin/index.html");
+            exit();
         } else {
-            // Authentication failed
-            echo "Invalid email, ID, or password!";
+            $error = "Invalid username or password";
         }
     } else {
-        // Handle case where email, ID, or password is empty
-        echo "Email, ID, and password are required!";
+        $error = "Wrong Data";
     }
-}
 ?>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
@@ -46,6 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <link href="/Project/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+         .blurred-background {
+            background-image: url('https://img.freepik.com/free-vector/quiz-background-with-flat-objects_23-2147593080.jpg');
+            background-size: cover;
+            filter: blur(5px); /* Adjust the blur amount as needed */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
       html,
 body {
   height: 100%;
@@ -170,7 +178,7 @@ header{
         <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
       </symbol>
     </svg>
-
+    <div class="blurred-background"></div>
 <header data-bs-theme="dark">
   <div class="collapse text-bg-dark" id="navbarHeader">
     <div class="container">
