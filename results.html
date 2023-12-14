@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="/project/js/color-modes.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="/project/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('https://img.freepik.com/free-vector/quiz-background-with-flat-objects_23-2147593080.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .blur-background {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: inherit;
+        }
+
+        .blur-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(10px);
+            z-index: -1;
+        }
+    </style>
+</head>
+<?php include './Admin/bootstrap-admin/includes/header.php'; ?>
+<body>
+    <div class="blur-background">
+        <div class="container">
+            <h1>Quiz Results</h1>
+
+            <script>
+                // Retrieve user's answers from local storage
+                var userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+        
+                if (userAnswers) {
+                    // Perform calculations and display results
+                    var totalQuestions = Object.keys(userAnswers).length;
+                    var attemptedQuestions = totalQuestions;
+                    var correctAnswers = 0;
+        
+                    // Implement logic to check correct answers based on your data
+                    // For simplicity, let's assume all answers are correct in this example
+                    correctAnswers = totalQuestions;
+        
+                    var unattemptedQuestions = 0;
+                    var incorrectAnswers = 0;
+        
+                    // Calculate unattempted and incorrect questions
+                    for (var questionName in userAnswers) {
+                        if (!userAnswers[questionName]) {
+                            unattemptedQuestions++;
+                            attemptedQuestions--; // Decrement attemptedQuestions for unattempted questions
+                        } else if (userAnswers[questionName] !== 'correctAnswer') {
+                            incorrectAnswers++;
+                        }
+                    }
+        
+                    // Output the results
+                    document.write('<p>Total Questions: ' + totalQuestions + '</p>');
+                    document.write('<p>Attempted Questions: ' + attemptedQuestions + '</p>');
+                    document.write('<p>Unattempted Questions: ' + unattemptedQuestions + '</p>');
+                    document.write('<p>Correct Answers: ' + correctAnswers + '</p>');
+                    document.write('<p>Incorrect Answers: ' + incorrectAnswers + '</p>');
+                } else {
+                    document.write('<p>No quiz data found.</p>');
+                }
+        
+                // Clear user's answers from local storage
+                localStorage.removeItem('userAnswers');
+            </script>
+
+        </div>
+    </div>
+</body>
+<script src="/project/js/bootstrap.bundle.min.js"></script>
+</html>

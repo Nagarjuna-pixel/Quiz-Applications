@@ -1,17 +1,5 @@
 <?php
-// Replace these variables with your database credentials
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$database = "quiz1";
-
-// Establish a connection to the database
-$conn = new mysqli($hostname, $username, $password, $database);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include './Admin/Bootstrap-admin/includes/db_connection.php';
 
 // Function to sanitize and validate input data
 function sanitizeInput($data) {
@@ -21,42 +9,29 @@ function sanitizeInput($data) {
     return $data;
 }
 
-// Function to start a session if not already started
-function startSession() {
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-}
-
-
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize and validate user input
-    $email = sanitizeInput($_POST["email-address"]);
+    $username = sanitizeInput($_POST["username"]);
     $password = sanitizeInput($_POST["password"]);
 
-    // Query to check if the email and password match in the database
-    $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+    // Query to check if the username and password match in the database
+    $sql = "SELECT * FROM users WHERE `username` = '$username' AND `password` = '$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Start a session
-        startSession();
+        // Start a new session (not recommended, but based on your requirement)
+        session_start();
+        
+        // Store user data in the session (not recommended)
+        $_SESSION['username'] = $username;
 
-        // Set session variables
-        $_SESSION["email-address"] = $email;
-
-        // Redirect to the home page or any desired page
-        header("Location: topics.html");
+        // Redirect to the homepage
+        header("Location: Homepage.php");
         exit();
     } else {
-        $error = "Invalid email address or password.";
+        $error = "Invalid username or password.";
     }
-}
-// Function to destroy the session
-function destroySession() {
-  session_unset();
-  session_destroy();
 }
 
 // Close the database connection
@@ -188,7 +163,7 @@ $conn->close();
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
+.form-signin input[type="text"] {
   margin-bottom: -1px;
   border-top-left-radius: -1px;
   border-top-right-radius: -1px;
@@ -231,37 +206,7 @@ $conn->close();
       </symbol>
     </svg>
     <div class="blurred-background"></div>
-<header data-bs-theme="dark">
-  <div class="collapse text-bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4>About</h4>
-          <p class="text-body-secondary">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4>Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <strong>Quiz</strong>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
-</header>
+<?php include './Admin/Bootstrap-admin/includes/header.php';?>
 
     
 <main class="form-signin w-100 m-auto">
@@ -277,8 +222,8 @@ $conn->close();
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
     </div>
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" name="email-address" placeholder="Email">
-      <label for="floatingInput">Email address</label>
+      <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Username">
+      <label for="floatingInput">Username</label>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" >
@@ -302,7 +247,7 @@ $conn->close();
 </main>
 <a href="profile.php">
 <div class="profile">
-      <img src="profile.png" width="100" height="100"> 
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAI0AAACNCAMAAAC9gAmXAAAAY1BMVEX////MzMxNTU3JycnQ0NBJSUnp6elDQ0PT09P7+/v29vY9PT1AQEDv7+/c3NzY2NiQkJCmpqbj4+O8vLxUVFRhYWFvb284ODiBgYGKioqsrKy0tLRcXFzDw8N3d3doaGiZmZn92lOFAAAE9ElEQVR4nO2bW5uaMBCGCyQQjhoicnBR//+vbEDbtbuZISfci+brxfZpV32Zmcwhib9+BQUFBQUFBQUFBQUF/SfK86JO27ZpmrZN6yLPfw6lbhsWJQ89fkasaesfIClStn78Vy3/yNLirSyptMk3kBekiKXvQilahU2+26h9h4GKBjXLq4GavXnyRsMun/Zpdl1jqaZdPu2zX/zkBzOWleewk3lSc5aVZxfztHYwEqf1zrLhJSL/wDi+vVUwEIawREjNCYOBiNe1XhAIhrDL0J1iGp+64QLyJD5xCpAlucclpfEqWsb3BOTxhlMAH0HI3FXxq7JuJtAve8LJATcxMWQ0/lc0GwQDnOUnlNWriUTHbyxPHsBdBx8w6jzDLp2KZXXXx0VpHh95R52BGS8hmCWcuRrHOSvnajdNMMvKc1c6K3ENnYMyBJIMhYnj/qLEcQwdwE/jFg29qo3j5KtcaZloPm3AxPFpVr/UxVeN2jTDlmnkwhrUgdzYwwAV4YCH8NNXQMTZp2S1achcatD0szpyrI1TKJ8uInzbUdJVHChYtsYBuj121PFUdgTqlW1GBvoIMmjFzQDYJrGDgbpyctWiUWcc65yjtrTUWYvmDL2c2cAAMexOYxXH8PjkSGPlKtBRjnFj5yrQNGzUohnBx7FYVTU8QN21sp+6xVlpzDfj4EGXTNU2TFxNMI15AlTXqJVG6NSpUsCjp3HTlYNel1Wz16ABqubjHUy7HKDPWt/L1VPmPRc47EbsqmMaaZwrvKhM8x+8pGYtlkVAM2qxqMBMTLhOtllEoQ7HPBuDC5wcdbLNouwI0pgucZhGq7tZbQN1OOY0YLrxQmPaHMM0Pjzlj2ZjBH+xDZxxTGmQMrU9aD508leoYJrtIfzpKKSlMKWBOz8idAqDLA1w2TTON3Au1tkTWB0FpmLzXAzXKbmqtDoKcEVZ1CmkhsvIAff8/oh2cNRE5jU8R/qBiCVbzjolGIz5Zq16w+PP220MMfSMPYzFPgV6ALRVHuCisNKY98XIotouD3BRWGksDvBRmo0mB25tVhpzGHjWXGgEChPHyMBgN2uix5jshhmH3rBHsZrD4T2KxTgcKw8V6ii7vTbs+aIESYC0Q89ArfZvcFdhwzgygkf2++kozYTQYIOd7b4fmgDJBQ6cTH3k8YSx3RPF4hijqTAa6/1iZJ8C3RookQ0Bh4MGpMmJIpimR17lchKNGQeh2cU0YM9FCDsgRx/lfGBQsnI6S1TlHEJmfhw6EEZmv+HIlcf0rues35suJoayyihaxGlWlapjetcj8S9nvoSIAQf5JKKD+GIf5zPff3xF2HSmumO4zIL0PL1eO/FxS+lvRiYRPyFn8kr7lCf+956QnztKh6eP+E15cWKDJ7vxh78SL/coljsmhCX3rjdnWXn67r7cW2KerksVRIwnzdhV8tB4FP5uJxW9zqyLqew9XpVKO/2VpFLWeb30l3644GQfnm8gFpo76Cr1V++XaXNuGzsl3+OqqKhslhWtxA4sUvVgbp5y2O/WvDCoUouyeCfDPFTcK4OqWd33vgtej7Hmnmg8vuOrDS3vN0sW7Xvu/1qxWrm4UgRI/t9VvPU7KI04y35UcU9U9qBn4TIZWCqPpvEmXdKX1aJS/o3exsltLHBSUadMTJzfOZ8ES+v3fgEmKCgoKCgoKCgoKCjoB/UbdV9NAsRsMF0AAAAASUVORK5CYII=" width="100" height="100"> 
 </a>
 </div>
 <script src="/Project/js/bootstrap.bundle.min.js"></script>

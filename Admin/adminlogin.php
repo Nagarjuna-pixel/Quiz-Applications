@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($adminemail=="admin@gmail.com" && $adminPassword=="admin001") {
             // Admin login successful, redirect to admin module
-            header("Location: /project/Admin/bootstrap-admin/index.html");
+            header("Location: /project/Admin/bootstrap-admin/buttons.php");
             exit();
         } else {
             $error = "Invalid username or password";

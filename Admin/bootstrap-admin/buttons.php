@@ -58,7 +58,6 @@
             <?php include './includes/Utilities.php';?>
 
             <!-- Divider -->
-            <?php include './includes/pages.php';?>
             <!-- Nav Item - Charts -->
             <?php include './includes/charting.php';?>
 

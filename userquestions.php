@@ -1,6 +1,17 @@
+<?php
 
+session_start();
 
+// Check if the user is not logged in
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit();
+}
 
+// Get the username from the session
+$username = $_SESSION['username'];
+
+?>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head><script src="/project/js/color-modes.js"></script>
@@ -148,37 +159,10 @@
       </symbol>
     </svg>
     
-<header data-bs-theme="dark">
-  <div class="collapse text-bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4>About</h4>
-          <p class="text-body-secondary">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4>Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
-        </div>
-      </div>
+<?php include './Admin/bootstrap-admin/includes/header.php';?>
+<div style="text-align: right; padding: 10px;">
+        <p>Welcome, <?php echo $username; ?>!</p>
     </div>
-  </div>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <strong>Quiz Questions</strong>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
-</header>
 
 <div id="timer-container">
     <img id="timer-image" src="https://image.shutterstock.com/image-vector/stopwatch-stop-watch-timer-flat-260nw-355549763.jpg" alt="Timer Image">
@@ -216,6 +200,9 @@
 </script>
 <br>
 <div class="container">
+  <main class="container">
+  <div class="bg-body-tertiary p-5 rounded">
+
 <?php
 // Database connection details
 include './Admin/Bootstrap-admin/includes/db_connection.php';
@@ -224,26 +211,39 @@ include './Admin/Bootstrap-admin/includes/db_connection.php';
 if (isset($_POST['category'])) {
     $topic = $_POST['category'];
 
-    // Fetch questions related to the selected topic from the database
+    //Fetch questions related to the selected topic from the database
     $sql = " SELECT * FROM `questions` WHERE `category` = '$topic' ";
     $result = $conn->query($sql);
 
     // Check if there are questions for the selected topic
     if ($result->num_rows > 0) {?>
+    <form method="POST" action="submit.php">
+    <input type="hidden" name="category" value="<?php echo $topic; ?>">
         <h1>Questions for <?php echo "$topic" ?></h1>
+<?php
+        while ($row = $result->fetch_assoc()) {
+    // Set the default value if not selected
+    $selectedOption = isset($_POST['options'][$row['question-id']]) ? $_POST['options'][$row['question_id']] : '';
 
-       <?php while ($row = $result->fetch_assoc()) {
-            echo "<p>{$row['question']}</p>";
-            echo "<input type='radio'>  {$row['option1']}";
-            echo "<br/>";
-            echo "<input type='radio'>  {$row['option2']}";
-            echo "<br/>";
-            echo "<input type='radio'>  {$row['option3']}";
-            echo "<br/>";
-            echo "<input type='radio'>  {$row['option4']}";
-            echo "<br/>";
-        }
+    echo "<p>{$row['question']}</p>";
 
+    /*echo "<input type='radio' name='options[{$row['question-id']}]' value='option1' id='option1' " . ($selectedOption == 'option1' ? 'checked' : '') . ">";*/
+    echo $row['option1'] . "<br/>";
+
+    /*echo "<input type='radio' name='options[{$row['question-id']}]' value='option2' id='option2' " . ($selectedOption == 'option2' ? 'checked' : '') . ">";*/
+    echo $row['option2'] . "<br/>";
+
+  /* echo "<input type='radio' name='options[{$row['question-id']}]' value='option3' id='option3' " . ($selectedOption == 'option3' ? 'checked' : '') . ">";*/
+    echo $row['option3'] . "<br/>";
+
+    /*echo "<input type='radio' name='options[{$row['question-id']}]' value='option4' id='option4' " . ($selectedOption == 'option4' ? 'checked' : '') . ">";*/
+    echo $row['option4'] . "<br/>";
+
+    echo "<input type='text' name='quizanswer' id='quizanswer' >";
+    echo "<br/>";
+
+    echo "<br/>";
+} 
     } else {
         echo "<p>No questions available for $topic </p>";
     }
@@ -255,10 +255,10 @@ if (isset($_POST['category'])) {
 $conn->close();
 ?>
 <br>
-<form method="POST" action="usersubmit.php">
 <button type="submit" name="submit" value="submit">SUBMIT</button>
 </form>
-
+</div>
+</main>
     </div>
 </body>
 

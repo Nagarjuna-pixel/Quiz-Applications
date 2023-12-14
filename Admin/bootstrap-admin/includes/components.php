@@ -10,7 +10,6 @@
                         <h6 class="collapse-header">Custom Components:</h6>
                         <a class="collapse-item active" href="buttons.php">Category</a>
                         <a class="collapse-item" href="cards.php">Questions</a>
-                        <a class="collapse-item" href="Quiz.php">Quiz</a>
                     </div>
                 </div>
             </li>

@@ -24,7 +24,6 @@ $password = "";
             <?php include './includes/Utilities.php';?>
 
             <!-- Divider -->
-            <?php include './includes/pages.php';?>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.php">
